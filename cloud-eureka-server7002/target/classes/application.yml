@@ -1,0 +1,17 @@
+server:
+  port: 7002
+
+eureka:
+  instance:
+    # 为了开启多个eureka server端做集群操作，这里需要修改hosts文件进行映射
+    # C:\Windows\System32\drivers\etc
+    hostname: eureka7002.com
+
+  client:
+    # false 表示不想注册中心注册自己
+    register-with-eureka: false
+    # false 表示自己端就是注册中心，职责就是维护服务实例，不需要去发现（检索）服务
+    fetch-registry: false
+    service-url:
+      # 这里就是集群之间的相互注册，将7002注册到7001里面去
+      defaultZone: http://eureka7001.com:7001/eureka/
