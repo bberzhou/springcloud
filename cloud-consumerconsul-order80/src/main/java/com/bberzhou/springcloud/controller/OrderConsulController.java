@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 @Slf4j
 @RestController
 public class OrderConsulController {
+    // 测试git 配置
     public static final String INVOKE_URL = "http://cloud-providerconsul-payment";
 
     @Resource
