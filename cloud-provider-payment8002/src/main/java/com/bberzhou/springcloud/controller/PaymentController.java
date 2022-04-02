@@ -3,12 +3,12 @@ package com.bberzhou.springcloud.controller;
 import com.bberzhou.springcloud.entities.CommonResult;
 import com.bberzhou.springcloud.entities.Payment;
 import com.bberzhou.springcloud.service.PaymentService;
-import com.netflix.discovery.DiscoveryClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -31,8 +31,8 @@ public class PaymentController {
     /**
      *  配置服务发现
      */
-    @Resource
-    private DiscoveryClient discoveryClient;
+    // @Resource
+    // private DiscoveryClient discoveryClient;
 
     @PostMapping(value = "/payment/create")
     public CommonResult<Object> create(@RequestBody Payment payment){
@@ -53,5 +53,30 @@ public class PaymentController {
         }else {
             return new CommonResult(404,"查询失败！",null);
         }
+    }
+
+
+    /**
+     *  测试自定义的轮询算法
+     * @return 返回服务端口
+     */
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        return serverPort;
+    }
+
+    /**
+     *  测试Feign的超时控制
+     *   设置睡眠3秒
+     * @return
+     */
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeout(){
+        try{
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return serverPort;
     }
 }

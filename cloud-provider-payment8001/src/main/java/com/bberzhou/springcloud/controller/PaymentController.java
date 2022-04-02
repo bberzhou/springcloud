@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
@@ -70,5 +71,29 @@ public class PaymentController {
                     +serviceInstance.getHost()+"\t"+serviceInstance.getPort()+"\t"+serviceInstance.getUri());
         }
         return this.discoveryClient;
+    }
+
+    /**
+     *  测试自定义的轮询算法
+     * @return 返回服务端口
+     */
+    @GetMapping(value = "/payment/lb")
+    public String getPaymentLB(){
+        return serverPort;
+    }
+
+    /**
+     *  测试Feign的超时控制
+     *   设置睡眠3秒
+     * @return
+     */
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeout(){
+        try{
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return serverPort;
     }
 }
