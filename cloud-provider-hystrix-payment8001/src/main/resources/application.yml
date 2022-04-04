@@ -1,0 +1,19 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    # 指定服务的名称，注意 hystrix一般是用在消费端，
+    name: cloud-provider-hystrix-payment
+
+
+eureka:
+  client:
+    # 将服务注册进入eureka
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      # 集群模式
+      # defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka
+      # 单机模式
+      defaultZone: http://eureka7001.com:7001/eureka

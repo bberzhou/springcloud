@@ -1,19 +1,19 @@
 # 单机版的Eureka配置
-#server:
-#  port: 7001
-#
-#eureka:
-#  instance:
-#    # eureka服务端的实例名称
-#    hostname: localhost
-#  client:
-#    # false 表示不向注册中心注册自己
-#    register-with-eureka: false
-#    # false 表示自己端就是注册中心，职责就是维护整个服务实例，并不需要去检索服务
-#    fetch-registry: false
-#    # 设置雨Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
-#    service-url:
-#      defaultZone: "https://${eureka.instance.hostname}:${server.port}/eureka/"
+server:
+  port: 7001
+
+eureka:
+  instance:
+    # eureka服务端的实例名称
+    hostname: localhost
+  client:
+    # false 表示不向注册中心注册自己
+    register-with-eureka: false
+    # false 表示自己端就是注册中心，职责就是维护整个服务实例，并不需要去检索服务
+    fetch-registry: false
+    # 设置雨Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
+    service-url:
+      defaultZone: "https://${eureka.instance.hostname}:${server.port}/eureka/"
 #
 #  # eureka的保护机制，默认是开启的 true，当注册中心里面的有服务因为网络等原因心跳发送失败时，默认是不会里面就移除该服务的，
 #  # 会有一个90秒的暂存机制，
@@ -25,19 +25,19 @@
 
 # 集群模式的配置，需要向其他的server进行注册
 #
-server:
-  port: 7001
-
-eureka:
-  instance:
-    # 为了开启多个eureka server端做集群操作，这里需要修改hosts文件进行映射
-    # C:\Windows\System32\drivers\etc
-    hostname: eureka7001.com
-
-  client:
-    # false 表示不想注册中心注册自己
-    register-with-eureka: false
-    # false 表示自己端就是注册中心，职责就是维护服务实例，不需要去发现（检索）服务
-    fetch-registry: false
-    service-url:
-      defaultZone: http://eureka7002.com:7002/eureka/
+#server:
+#  port: 7001
+#
+#eureka:
+#  instance:
+#    # 为了开启多个eureka server端做集群操作，这里需要修改hosts文件进行映射
+#    # C:\Windows\System32\drivers\etc
+#    hostname: eureka7001.com
+#
+#  client:
+#    # false 表示不想注册中心注册自己
+#    register-with-eureka: false
+#    # false 表示自己端就是注册中心，职责就是维护服务实例，不需要去发现（检索）服务
+#    fetch-registry: false
+#    service-url:
+#      defaultZone: http://eureka7002.com:7002/eureka/

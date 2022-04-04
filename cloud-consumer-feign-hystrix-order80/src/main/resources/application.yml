@@ -1,0 +1,19 @@
+server:
+  # 配置消费端的端口80
+  port: 80
+
+# 消费端可以不注册进eureka
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+# openFeign的日志级别及其配置
+# NONE：默认的，不显示任何日志
+# BASIC：仅记录请求方法、URL、响应状态码和执行时间
+# HEADERS：除了BASIC中定义的信息之外，还有请求和响应的头信息，
+# FULL：除了HEADERS中定义的信息之外，还有请求和响应的正文以及元数据
+logging:
+  level:
+    # 配置feign日志 以debug的级别监控PaymentFeignService接口
+    com.bberzhou.springcloud.service.PaymentHystrixService: debug
