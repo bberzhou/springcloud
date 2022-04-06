@@ -8,6 +8,31 @@ eureka:
     register-with-eureka: false
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka
+
+
+# 在客户端开启对hystrix的支持
+feign:
+  hystrix:
+    # 开启feign的Hystrix断路器，默认是false
+    enabled: true
+# 注意：这里要单独设置一下Hystrix的时间，因为Feign将使用断路器包装所有的方法，也就是会将@FeignClint标记的那个Service接口下的所有方法
+# 进行了hystrix的保证，类似在这些方法上加一个 @HystrixCommand 注解，这些方法会默认超时时间为 1s，所以还需要单独设置hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 修改hystrix的默认等待时间为 5000 ms
+            timeoutInMilliseconds: 5000
+
+# 设置feign客户端超时的时间（openFeign默认支持ribbon），可以通过配置这个属性，来对一些请求时间较长的进行处理，避免报错
+ribbon:
+  # 指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间
+  ConnectTimeout: 5000
+  # 指的是建立连接之后从服务器端读取到可用资源所用的时间
+  ReadTimeout: 5000
+
 # openFeign的日志级别及其配置
 # NONE：默认的，不显示任何日志
 # BASIC：仅记录请求方法、URL、响应状态码和执行时间

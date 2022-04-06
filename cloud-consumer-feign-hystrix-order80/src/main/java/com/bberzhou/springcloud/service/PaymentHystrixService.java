@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * Create By Intellij IDEA
  */
 @Component
-@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT",configuration = FeignConfig.class)
+// 为当前接口，设置统一的fallback方法，避免在每一个controller里面吗去写
+@FeignClient(value = "CLOUD-PROVIDER-HYSTRIX-PAYMENT",configuration = FeignConfig.class, fallback = PaymentHystrixServiceImpl.class)
 public interface PaymentHystrixService {
     @GetMapping(value = "/payment/hystrix/ok/{id}")
     String paymentInfoOk(@PathVariable(value = "id") Integer id);
