@@ -11,6 +11,17 @@
 
     <artifactId>cloud-provider-payment8002</artifactId>
     <dependencies>
+        <!-- 引入hystrix-->
+        <!--新增hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!-- 添加hystrix的dashboard依赖，仪表盘-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+        </dependency>
         <!-- 配置eureka客户端 client-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

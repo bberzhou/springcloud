@@ -1,0 +1,22 @@
+server:
+  port: 9001
+
+
+# 在dashboard页面，出现错误：Unable to connect to Command Metric Stream.，注意路径
+
+# 注意对服务监控的 访问路径 ：http://localhost:8001/hystrix.stream
+#hystrix:
+#  dashboard:
+#    proxy-stream-allow-list: "*"
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: hystrix.stream
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#      base-path: "/"
+#  默认访问的路径是 localhost:9001/hystrix
