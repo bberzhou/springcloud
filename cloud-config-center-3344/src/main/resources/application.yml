@@ -1,0 +1,31 @@
+server:
+  port: 3344
+spring:
+  application:
+    # 注册进Eureka服务器的名称
+    name: cloud-config-center
+
+  cloud:
+    config:
+      server:
+        git:
+          # github上面的仓库名称
+          uri: https://github.com/bberzhou/springcloud-config.git
+          # 搜索目录
+          search-paths:
+            - springcloud-config
+      # 读取分支
+      label: main
+      #{label}/{application}-{profile}.yml ，可以配置main或者dev分支
+
+      # 注意，如果使用 {application}-{profile}.yml，默认得label是master，
+      # org.springframework.cloud.config.server.environment.NoSuchLabelException: No such label: master，
+      # 现在GitHub默认是main就会报错
+
+
+
+# 将这个服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
