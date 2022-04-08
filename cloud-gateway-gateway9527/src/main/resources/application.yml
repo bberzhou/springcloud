@@ -1,0 +1,73 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: cloud-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # 开启从注册中心动态创建路由的功能，利用微服务名进行路由，这样就可以在8001/8002两个端口进行切换
+          enabled: true
+      # 可以设置多个路由
+      routes:
+        # 使用过滤器链
+#        - id: add_request_header_route
+#          uri: https://example.org
+#          filters:
+#            - AddRequestHeader=X-Request-red, blue
+
+
+        # 路由的 ID，没有固定规则，但是要求唯一，一般建议配合具体的服务名，如8001中的payment
+        # 这里配置之后，在访问的时候，就可以使用gateway网关进行访问了，不用暴露出真实的访问地址，因为这里做了地址映射
+        - id: payment_routh
+          # uri: http://localhost:8001
+          # 使用匹配后提供服务的路由地址，避免使用上面这种方式写的太死板
+          uri: lb://cloud-payment-service
+          predicates:
+            - Path=/payment/get/**      # 断言，路径相匹配的进行路由
+            # 4、Between
+#            - Before=2017-01-20T17:42:47.789-07:00[America/Denver]
+#            - Between=2017-01-20T17:42:47.789-07:00[America/Denver], 2017-01-21T17:42:47.789-07:00[America/Denver]
+
+        - id: payment_routh2
+          # 使用匹配后提供服务的路由地址，避免使用上面这种方式写的太死板
+          uri: lb://cloud-payment-service
+          # uri: http://localhost:8001      # 为 cloud-provider-payment8001做路由
+          predicates:
+            - Path=/payment/lb/**         # 断言，路径相匹配的进行路由
+            # 1、After Before
+            # - After=2022-04-07T22:21:16.789+08:00[Asia/Shanghai]
+
+            # 2、Cookie
+            # 还可以添加Cookie的Predicate，需要两个参数，一个是Cookie name，一个是正则表达式。
+            # 路由规则会通过获取对应的Cookie name值和正则表达式去匹配，如果匹配的上，就会执行路由，如果没有匹配上则不执行
+            #- Cookie=username,zzyy
+
+            # 3、Header请求头，里面要有一个X-Request-Id属性并且值为整数的正则表达式
+            # - Header=X-Request-Id,\d+
+
+          ####################################################################
+
+
+
+# 断言，参考 https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#gateway-request-predicates-factories
+
+# gateway也需要作为一个微服务注册进入到服务中心
+eureka:
+  instance:
+    # eureka服务端的实例名称
+    hostname: cloud-gateway-service
+  client:
+    # false 表示不向注册中心注册自己
+    register-with-eureka: true
+    # false 表示自己端就是注册中心，职责就是维护整个服务实例，并不需要去检索服务
+    fetch-registry: true
+    # 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
+    service-url:
+      # 集群版本的配置
+      # defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+      # 单机版的配置，为了方便演示，就使用 7001 和 8001
+      defaultZone: http://eureka7001.com:7001/eureka

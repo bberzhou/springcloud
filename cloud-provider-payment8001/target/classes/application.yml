@@ -22,9 +22,9 @@ eureka:
     fetch-registry: true
     service-url:
       # 单机版的配置，为了方便演示，就使用 7001 和 8001
-#       defaultZone: http://localhost:7001/eureka
+       defaultZone: http://localhost:7001/eureka
       # 集群版本的配置
-       defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+       # defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
 
   # 配置主机名和ip地址显示，这个是actuator监控时使用
   instance:
