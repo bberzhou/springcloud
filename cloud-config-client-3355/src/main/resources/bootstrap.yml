@@ -21,6 +21,14 @@ spring:
       # 上面三个综合起来：main分支上config-dev.yml的配置文件会被读取到 http://config-3344.com:3344/main/config-dev.yml
       # 配置中心地址
       uri: http://localhost:3344
+  # 增加rabbitmq的相关配置，
+  rabbitmq:
+    # 虚拟机的 ip地址
+    host: 192.168.60.130
+    # 注意端口：15672 是web管理界面的端口，5672是MQ访问的端口
+    port: 5672
+    username: admin
+    password: rabbitmq
 
 
 # 将client服务也注册到eureka地址

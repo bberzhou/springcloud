@@ -1,0 +1,51 @@
+server:
+  port: 8801
+
+spring:
+  application:
+    name: cloud-stream-provider
+  # 设置rabbitmq的相关 配置环境
+  rabbitmq:
+    # 虚拟机的ip地址
+    host: 192.168.60.130
+    # 注意端口：15672 是web管理界面的端口，5672是MQ访问的端口
+    port: 5672
+    username: admin
+    password: rabbitmq
+
+  cloud:
+    stream:
+      # 在这里设置需要绑定的mq的服务信息，这里咦rabbitmq为例
+      binders:
+        # 表示定义的名称，用于binding整合
+        defaultRabbit:
+          # 消息组件的类型
+          type: rabbit
+
+#          environment:
+      # 服务的整合过程
+      bindings:
+        # 这个名字是一个通道的名字
+        output:
+          # 表示要使用的Exchange的名称定义
+          destination: studyExchange
+          # 设置消息的类型，这里设置为json，还可以设置为 text/plain
+          content-type: application/json
+          # 设置要绑定的消息服务的具体设置
+#          binder: defaultRabbit
+
+eureka:
+  # 客户端进行Eureka注册的配置
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+  instance:
+    # 设置心跳的时间间隔（默认时30s）
+    lease-renewal-interval-in-seconds: 2
+    # 设置过期时间 (默认时90s)
+    lease-expiration-duration-in-seconds: 5
+    # 在信息列表显示的实例id（主机名称）
+    instance-id: send-8801.com
+    # 选择访问路径为ip 地址
+    prefer-ip-address: true

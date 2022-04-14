@@ -22,6 +22,15 @@ spring:
       # org.springframework.cloud.config.server.environment.NoSuchLabelException: No such label: master，
       # 现在GitHub默认是main就会报错
 
+# 增加rabbitmq的相关配置
+  rabbitmq:
+    # 虚拟机的 ip地址
+    host: 192.168.60.130
+    # 注意端口：15672 是web管理界面的端口，5672是MQ访问的端口
+    port: 5672
+    username: admin
+    password: yourpassword
+
 
 
 # 将这个服务注册到eureka地址
@@ -29,3 +38,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:7001/eureka
+
+
+
+# 服务器添加rabbitmq 之后，需要进行相关的配置，暴露bus 刷新配置的端点
+# 通过这样配置以后，就只需要刷新 服务端的 就可以同步刷新所有的客户端
+# curl -X POST "http://localhost:3344/actuator/bus-refresh"
+#
+management:
+  # 暴露bus 刷新配置的端点
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'

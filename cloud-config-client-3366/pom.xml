@@ -11,6 +11,11 @@
 
     <artifactId>cloud-config-client-3366</artifactId>
     <dependencies>
+        <!-- 添加消息总线 rabbit mq的支持-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
         <!-- 配置spring cloud config, config的客户端，去读取3344 server端的内容-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
