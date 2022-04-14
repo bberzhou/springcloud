@@ -3,7 +3,6 @@ package com.bberzhou.springcloud.controller;
 import com.bberzhou.springcloud.entities.CommonResult;
 import com.bberzhou.springcloud.entities.Payment;
 import com.bberzhou.springcloud.loadbalance.MyLoadBalance;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -95,5 +94,11 @@ public class OrderController {
         URI uri = serviceInstance.getUri();
         return restTemplate.getForObject(uri+"/payment/lb",String.class);
 
+    }
+
+    @GetMapping(value = "/consumer/payment/zipkin")
+    public String paymentZipkin(){
+        String result = restTemplate.getForObject("http://localhost:8001"+"/payment/zipkin/",String.class);
+        return result;
     }
 }
