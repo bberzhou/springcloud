@@ -1,0 +1,16 @@
+# 设置配置文件得类型是哪一个
+spring:
+  profiles:
+    # 测试相同id 的不同group , 对应nacos中配置的nacos-config-client-info.yaml,id,需要使用DEV_GROUP和Test_GROUP来进行区分
+    # active: info
+  # 表示测试环境
+    #    active: test
+    # 表示目前使用那个环境得配置文件，需要使用哪个就激活哪个
+    # 表示开发环境
+    active: dev
+
+
+
+# 通过首先是namespace，然后是group去找对应active的配置文件
+
+# ${spring.application.name}-${spring.profiles.active}.${file-extension}

@@ -1,0 +1,43 @@
+# Nacos 同SpringCloud- config 一样，在项目的初始化时，要保证先从配置中心进行配置文件的拉取
+# 拉取配置之后，才能保证项目的正常启动
+# Springboot中的配置文件的加载是存在优先级顺序的，bootstrap的优先级要高于application
+
+# nacos 配置中心的相关配置
+server:
+  port: 3377
+# 之所以需要配置 spring.application.name ，是因为它是构成 Nacos 配置管理 dataId字段的一部分。
+# 在 Nacos Spring Cloud 中，dataId 的完整格式如下：
+# ${prefix}-${spring.profiles.active}.${file-extension} ： spring.profiles.active 是配置在application.yml 中的
+# 对应的详细文档https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html
+spring:
+  application:
+    name: nacos-config-client
+  cloud:
+    nacos:
+      discovery:
+        # nacos 的服务注册中心地址
+        server-addr: 192.168.60.130:8848
+      config:
+        # Nacos作为配置中心的地址
+        server-addr: 192.168.60.130:8848
+        # 指定文件的扩展类型格式 yaml，注意这里一定要和nacos 上面的后缀配置一致才行
+        file-extension: yaml
+        # 设置微服务的分组
+        # group: DEV_GROUP
+        group: DEFAULT_GROUP
+        # 设置命令空间,注意这个namespace一定是唯一的,可以自动生成,也可以手动的去生成, 这个就是在相当的namespace下去读取不同的group下不同id的配置文件
+        namespace: 08b96183-0132-4c50-8030-2a95a54d81a1
+
+# ${prefix}-${spring.profiles.active}.${file-extension}
+# ===
+# ${spring.application.name}-${spring.profiles.active}.${file-extension}
+
+
+# nacos-config-client-dev.yaml ，注意如果在nacos 上面进行配置的时候，写成 yml 就会报错
+
+
+# nacos中的 Namespace+Group+Data Id 三者的关系，
+# 默认情况是 Namespace=public, Group=DEFAULT_GROUP ，默认cluster是DEFAULT
+
+# Namespace 主要是用来实现隔离，比如三个环境：开发、测试、生产环境，就可以创建三个不同的Namespace，不同的np之间是相互隔离的
+# Group则是可以将不同的微服务划分到不同的一个分组里面去，跟stream里面的分组功能很像,这个需要现在Nacos里面修改,然后再修改配置文件对应的group和active
