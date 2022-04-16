@@ -7,8 +7,13 @@ spring:
   cloud:
     nacos:
       discovery:
-        # 配置Nacos的地址
-        server-addr: 192.168.60.130:8848
+        #  这里如果配置nacos集群之后，再使用nginx 反向代理，就只需要访问nginx即可
+        #  nginx配置的外部访问端口是 ，ip:1111,在 Ubuntu的/etc/nginx ，中的 nginx.conf 配置文件中
+        # Ubuntu内部nacos集群是：192.168.60.130:8844,192.168.60.130:8845,192.168.60.130:8846,
+        server-addr: 192.168.60.130:1111
+
+        # 配置Nacos的地址, 单机启动的时候默认访问端口 8848
+        # server-addr: 192.168.60.130:8848
 
 management:
   endpoints:
