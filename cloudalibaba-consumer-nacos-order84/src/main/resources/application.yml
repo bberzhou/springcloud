@@ -1,0 +1,26 @@
+# 配置微服务消费者84
+server:
+  port: 84
+
+spring:
+  application:
+    name: nacos-order-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.60.130:8848
+
+    sentinel:
+      transport:
+        # 配置sentinel的 dashboard 地址，默认启动是8080，部署在Ubuntu服务器上的
+        # 这个是前台展示的端口
+        dashboard: 192.168.60.130:8080
+        # 默认服务的端口是 8719 端口，加入被占用会自动从8719开始一次 +1 扫描，直到找到没被占用的端口
+        # 这个是sentinel后台与微服务通信的服务端口
+        port: 8719
+
+# 消费者将要瞿访问的微服务的名称（即是注册进nacos的微服务的提供者）
+
+service-url:
+  nacos-user-service: http://nacos-payment-provider
+

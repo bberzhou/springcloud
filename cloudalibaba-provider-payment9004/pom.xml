@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloudalibaba-sentinel-service8401</artifactId>
-
+    <artifactId>cloudalibaba-provider-payment9004</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,11 +17,6 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
-        <!-- Sentinel持久化，主要是配置持久化到nacos ，然后nacos可以配置自带或者其他数据库，进行持久化的存储-->
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
         <!-- 引入alibaba nacos 依赖，以后的话，nacos + sentinel 同时配-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

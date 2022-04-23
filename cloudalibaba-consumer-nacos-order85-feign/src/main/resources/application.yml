@@ -1,0 +1,29 @@
+# 配置消费者 85
+server:
+  port: 85
+
+spring:
+  application:
+    name: nacos-order-consumer
+  cloud:
+    nacos:
+      discovery:
+        # nacos 服务器 ip:port
+        server-addr: 192.168.60.130:8848
+    sentinel:
+      transport:
+        # 配置sentinel的 dashboard地址
+        dashboard: 192.168.60.130:8080
+        # 默认服务的端口是 8719 端口，加入被占用会自动从8719开始一次 +1 扫描，直到找到没被占用的端口
+        # 这个是sentinel后台与微服务通信的服务端口
+        port: 8719
+
+# 消费者将要去访问的微服务名称（注册成功就进入nacos的微服务提供者）
+service-url:
+  nacos-user-service: http://nacos-payment-provider
+# 注意这里需要开启 feign 对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
+
