@@ -1,0 +1,26 @@
+server:
+  # 配置服务端口
+  port: 8401
+spring:
+  application:
+    name: cloudalibaba-sentinel-service
+  cloud:
+    nacos:
+      discovery:
+        # nacos 服务注册中心的地址吗，单机版的nacos ，默认端口是8848，部署在Ubuntu服务器上的
+        server-addr: 192.168.60.130:8848
+
+    sentinel:
+      transport:
+        # 配置sentinel的 dashboard 地址，默认启动是8080，部署在Ubuntu服务器上的
+        # 这个是前台展示的端口
+        dashboard: 192.168.60.130:8080
+        # 默认是 8719 端口，加入被占用会自动从8719开始一次 +1 扫描，直到找到没被占用的端口
+        # 这个是sentinel后台与微服务通信的服务端口
+        port: 8719
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
